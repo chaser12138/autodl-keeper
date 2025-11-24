@@ -1,0 +1,25 @@
+name: Run autodl-keeper
+
+# 触发条件：每天定时运行（可根据需求调整）
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 时间 0 点（北京时间 8 点）运行
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  run-keeper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4  # 拉取仓库代码（主要为了获取 .env 配置，若手动配置可不拉取）
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3  # 初始化 Docker 环境
+
+      - name: Run autodl-keeper container
+        run: |
+          # 启动原镜像，通过环境变量传入配置（替代 .env 文件）
+          docker run --rm \
+            -e "Authorization=${{ secrets.AUTODL_AUTHORIZATION }}" \
+            -e "MIN_DAY=${{ secrets.AUTODL_MIN_DAY }}" \
+            wdkang/autodl-keeper:latest
