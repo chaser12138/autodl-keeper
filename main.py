@@ -120,10 +120,10 @@ def main():
 if __name__ == "__main__":
     # 先检查一次 再定时检查
     main()
-    scheduler = BlockingScheduler()
-    scheduler.add_job(main, 'interval', hours=1)
-    try:
-        # 启动调度器
-        scheduler.start()
-    except (KeyboardInterrupt, SystemExit):
-        print("KeyboardInterrupt Or SystemExit")
+    # scheduler = BlockingScheduler()
+    # scheduler.add_job(main, 'interval', hours=1)
+    # try:
+    #     # 启动调度器
+    #     scheduler.start()
+    # except (KeyboardInterrupt, SystemExit):
+    #     print("KeyboardInterrupt Or SystemExit")
